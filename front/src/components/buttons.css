@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'MyCustomFont';  /* Nombre personalizado de la fuente */
+  src: url('src/designs/SEASRN.ttf') format('truetype');
+  font-weight: normal;  /* Puedes especificar el peso de la fuente (normal, bold, etc.) */
+  font-style: normal;   /* Puedes especificar si es cursiva o no */
+}
+.buttons-container {
+    font-family: 'Times New Roman', Times, serif;
+     display: flex;
+     flex-direction: column;          /* Coloca los botones en columna */
+     gap: 100px;                      /* Espacio entre los botones */
+     justify-content: center;         /* Centra el contenido verticalmente dentro del contenedor */
+     align-items: center;             /* Centra los botones horizontalmente */
+     margin-top: 50px;
+   }
+   
+   /* Estilos para los botones personalizados */
+   .custom-button {
+     background-color: rgba(255, 255, 255, 0.938);      /* Fondo blanco */
+     font-family: 'MyCustomFont', sans-serif; 
+     color: #A1A1A1;               /* Texto en verde claro */
+     border: 2px solid #A1A1A1;    /* Borde verde claro */
+     padding: 40px 30px;           /* Espaciado interno para el botón */
+     font-size: 40px;              /* Tamaño de letra */
+     border-radius: 50px;          /* Bordes redondeados */
+     cursor: pointer;              /* Cambia el cursor a pointer */
+     transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+     width: 500px;                 /* Fija un ancho para ambos botones */
+     text-align: center;           /* Asegura que el texto esté centrado */
+     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s; /* Transiciones suaves */
+     box-shadow: 0 10px 100px rgba(255, 255, 255, 0.382);  /* Sombra inicial */
+   }
+   
+   .custom-button:hover {
+     transform: translateY(-5px);     /* Levanta el botón hacia arriba */
+     background-color: #A1A1A1;       /* Cambia el fondo a verde claro */
+     color: white;                    /* Cambia el texto a blanco */
+     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Aumenta la sombra */
+   }

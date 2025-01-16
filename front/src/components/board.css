@@ -1,0 +1,661 @@
+.game-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-leftdata img,
+.card-rightdata img,
+.card-topdata img,
+.card-bottomdata img {
+  width: 100%; /* Ajusta la imagen al 100% del contenedor */
+  height: auto; /* Mantén la relación de aspecto */
+  display: block; /* Elimina el espacio debajo de la imagen */
+  object-fit: contain; /* Asegura que la imagen mantenga sus proporciones */
+}
+/* Capa oscura que cubre todo el tablero antes de que la partida comience */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Oscurecer la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.waiting-message {
+  text-align: center;
+  color: white;
+}
+
+.ok-button {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  left: 43%;
+  bottom: 5%;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.ok-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+.confirm-button {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  left: 18%;
+  bottom: 15%;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.confirm-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+.cancel-button {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  right: 18%;
+  bottom: 15%;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.cancel-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+/* Contenedor del tablero */
+.board-container {
+  display: grid;
+  background-color: rgba(255, 255, 255, 0.84);
+  padding: 25px;
+  border-radius: 10px;
+  grid-template-columns: repeat(6, 1); /* 6 columnas */
+  grid-template-rows: repeat(6, 1); /* 6 filas */
+  gap: 13px; /* Espacio entre las fichas */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Contenedor de las fichas */
+.tokens-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Para evitar que las fichas bloqueen clics */
+}
+
+/* Cada ficha */
+.token {
+  width: 69px; /* Ajusta el tamaño según corresponda */
+  height: 69px;
+  border: none;
+  background-size: cover; /* Ajusta el fondo para cubrir todo el contenedor */
+  background-position: center;
+  transition: transform 0.5s ease-in-out, background-image 0.5s ease-in-out;
+  transform: translateX(
+    0
+  ); /* O asegúrate de que las transformaciones no afecten la posición */
+}
+
+/* Colores de las fichas */
+.token.RED {
+  background-image: url("./src/designs/A.svg");
+
+  /* background-color:#E36530; */
+}
+
+.token.BLUE {
+  background-image: url("./src/designs/D.svg");
+  /* background-color:#2F4E5A; */
+}
+
+.token.GREEN {
+  background-image: url("./src/designs/C.svg");
+  /* background-color:#93B98F; */
+}
+
+.token.YELLOW {
+  background-image: url("./src/designs/B.svg");
+  /* background-color:#FACA5C; */
+}
+
+/* Animación cuando las fichas cambian de posición */
+.token-move {
+  animation: tokenMove 1s ease-in-out;
+}
+
+@keyframes tokenMove {
+  0% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.token.highlighted {
+  outline: 5px solid rgb(136, 138, 128); /* Resalta los tokens con un outline */
+  box-shadow: 0px 0px 25px 10px rgba(110, 110, 107, 0.7); /* Sombra amarilla */
+  position: relative;
+}
+
+.token.high {
+  outline: 5px solid rgb(6, 201, 207); /* Resalta los tokens con un outline */
+  box-shadow: 0px 0px 25px 10px rgb(6, 201, 207);
+  position: relative;
+}
+
+/* Botón para abandonar la partida */
+.leave-button {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.leave-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+.error-message {
+  color: red;
+  background-color: #f8d7da;
+  position: fixed;
+  top: 350px;
+  right:500px;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid red;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+
+.noleave-button {
+  position: fixed;
+  top: 2px;
+  left: 150px;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.noleave-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+.leave-notification {
+  position: relative;
+  top: 5%;
+  left: 10%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  z-index: 1000;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.winner-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #28a745; /* Color verde de éxito */
+  color: white;
+  padding: 30px 50px 80px;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.confirm-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #a1a1a1; /* Color verde de éxito */
+  color: white;
+  padding: 30px 50px 80px;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.game-cancel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.851);
+  color: #a1a1a1;
+  padding: 30px 50px 80px;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Botón para iniciar la partida */
+.start-game-button {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 15px 25px;
+  font-size: 25px;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.start-game-button:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1f3;
+  color: white;
+}
+
+.turno-finalizado {
+  position: absolute;
+  width: 150px;
+  bottom: 3%;
+  right: 2%;
+  background-color: rgba(255, 255, 255, 0.851);
+  border: 0px solid #ffffffd4;
+  padding: 30px 25px;
+  font-size: 25px;
+  color: #a1a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  border-radius: 20px;
+}
+
+.turno-finalizado:hover {
+  transform: translateY(-3px);
+  background-color: #a1a1a1ec;
+  color: white;
+}
+
+.player-name-left {
+  position: absolute;
+  bottom: 28%;
+  left: 9.5%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0px 15px;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  width: 110px;  /* Asegura el tamaño suficiente para el nombre */
+  z-index: 110;
+}
+
+/* Nombre del jugador en la derecha */
+.player-name-right {
+  position: absolute;
+  bottom: 28%;
+  right: 8%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0px 15px;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  width: 110px;
+  z-index: 10;
+}
+
+/* Nombre del jugador en la parte superior */
+.player-name-top {
+  position: absolute;
+  top: 5%;
+  left: 62.3%;
+  transform: translateX(-50%);
+  transform: rotate(90deg);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0px 20px;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  width: 110px;
+  z-index: 101;
+}
+/* Posicionar cartas alrededor del tablero */
+
+/* Cartas en la izquierda */
+.card-left {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.851);
+  align-items: center;
+  padding: 15px;
+  border-radius: 15px;
+  width: 110px;
+  height: 450px;
+  top: 11%; /* Alineado en la parte superior */
+  left: 9.5%; /* Pegado al lado izquierdo */
+  display: flex;
+  flex-direction: column; /* Para organizar las cartas en columna */
+  gap: 40px; /* Espacio entre las cartas */
+}
+
+.card-leftdata {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  border-radius: 10px;
+  text-align: center;
+  width: 125px;
+  height: 125px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+  0 6px 20px rgba(0, 0, 0, 0.19);
+}
+/* Cartas en la derecha */
+.card-right {
+  position: absolute;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.851);
+  padding: 15px;
+  width: 110px;
+  height: 450px;
+  border-radius: 15px;
+  top: 11%; /* Alineado en la parte superior */
+  right: 8%; /* Pegado al lado izquierdo */
+  display: flex;
+  flex-direction: column; /* Para organizar las cartas en columna */
+  gap: 40px;
+}
+
+.card-rightdata {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  border-radius: 10px;
+  text-align: center;
+  width: 125px;
+  height: 125px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+  0 6px 20px rgba(0, 0, 0, 0.19);
+}
+/* Cartas en la parte superior */
+.card-top {
+  position: absolute;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.851);
+  padding: 10px;
+  width: 450px;
+  height: 110px;
+  border-radius: 15px;
+  top: 0; /* Cercano a la parte superior */
+  left: 50%; /* Alineado al centro */
+  transform: translateX(-50%);
+  display: flex;
+  gap: 60px; /* Espacio entre las cartas */
+}
+
+.card-topdata {
+  background-color: rgba(74, 74, 74, 0);
+  padding: 0px;
+  border-radius: 10px;
+  text-align: center;
+  width: 125px;
+  height: 110px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+  0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+/* Cartas en la parte inferior */
+.card-bottom {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.851);
+  padding: 10px;
+  width: 510px;
+  height: 165px;
+  border-radius: 15px;
+  bottom: 0.5%; /* Cercano a la parte inferior */
+  left: 50%; /* Alineado al centro */
+  transform: translateX(-50%);
+  display: flex;
+  gap: 80px;
+  
+}
+
+.card-bottomdata {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  border-radius: 10px;
+  text-align: center;
+  width: 125px;
+  height: 125px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+  0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+.card-bottomdata img {
+  width: 100%; /* Asegúrate de que la imagen ocupe todo el espacio disponible */
+  height: auto;
+}
+
+.card-container.card-bottom {
+  align-items: center;
+  display: flex; /* Distribuye las cartas horizontalmente */
+  justify-content: space-between; /* Espacio entre las cartas */
+  gap: 40px; /* Espaciado entre las cartas */
+  height: 110px;
+}
+
+.card-bottommove {
+  position: absolute;
+  bottom: 2%; /* Cercano a la parte inferior */
+  left: 75.6%; /* Alineado al centro */
+  display: flex;
+  align-items: center;
+  gap: 58px;
+}
+.card-movedata {
+  background-color: rgba(255, 255, 255, 0.851);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  align-items: center;
+  width: 130px;
+  height: 170px;
+  cursor: pointer;
+}
+.card-movedata img {
+  width: 115px;
+  height: auto;
+  pointer-events: auto; /* Asegura que los eventos de puntero están habilitados */
+}
+.card-container.card-bottommove {
+  position: absolute;
+  bottom: 10px;
+  right: 205px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  z-index: 10; /* Asegura que este contenedor está por encima de otros elementos */
+}
+/* Carta de movimiento al lado de las cartas en la parte inferior */
+.card-bottom .card:last-child {
+  margin-left: 20px; /* Espacio extra para la carta de movimiento */
+}
+
+.arrow-button {
+  background-color: rgba(255, 255, 255, 0.84);
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: transparent;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  right: 18vh;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px; /* Ajusta según necesites */
+  padding: 0px;
+}
+
+.turn-info {
+  position: absolute;
+  bottom: 3%;
+  left: 3%;
+  background-color: rgba(255, 255, 255, 0.84); /* Fondo translúcido */
+  padding: 0px ;
+  width: 310px;
+  height: 190px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+.turn-info p {
+  position: relative;
+  top:-10px;
+  line-height: 0.9; /* Ajustar según necesites */
+  margin: 10px 10px 10px;
+  font-size: 20px;
+  bottom: 100px;
+  color: #666;
+}
+
+.cancel-move-button {
+  position: absolute;
+  top: 147px;
+  left: 350px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 0;
+  padding: 15px 25px;
+  font-size: 20px;
+  color: #0e0000;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  border-radius: 10px;
+}
+
+.cancel-move-button:hover {
+  background-color: #a1a1a1f3;
+  transform: translateY(-3px);
+}
+
+.leave-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.6; 
+}
+
+.warning-message {
+  position: fixed;
+  top: 10px; /* Posicionar desde la parte superior */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f44336; /* Color de fondo rojo para advertencia */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  z-index: 1000; /* Asegurar que esté sobre otros elementos */
+  animation: slideDown 0.5s ease-out; /* Animación de deslizamiento hacia abajo */
+}
+
+@keyframes slideDown {
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+  100% {
+    top: 10px;
+    opacity: 1;
+  }
+}

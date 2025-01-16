@@ -1,0 +1,56 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* Deshabilita el scroll */
+  height: 100%;
+  width: 100%;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1s ease-in-out;  /* Transición suave */
+}
+
+/* Frame 4: Primer fondo */
+.frame4 {
+  background-image: url('./designs/frame4.svg');
+  opacity: 1;  /* Empieza visible */
+  transition: opacity 1s ease-in-out;
+}
+
+/* Frame 0: Segundo fondo (oculto al inicio) */
+.frame0 {
+  background-image: url('./designs/frame0.svg');
+  background-position: center top;
+  height: 110vh;
+  opacity: 0;  /* Oculto inicialmente */
+  transition: opacity 1s ease-in-out;
+}
+
+.frame-board {
+  background-image: url('./designs/frame05.svg'); /* Imagen de fondo del tablero */
+  background-position: center;  /* Centra la imagen */
+  background-size: cover;       /* Asegura que la imagen cubra todo el fondo */
+  height: 100vh;                /* Ocupa toda la pantalla */
+  width: 100vw;
+  opacity: 0;  /* Inicialmente oculto */
+  transition: opacity 1s ease-in-out;
+}
+
+/* Clase que se aplica cuando un frame está activo (desvanecido) */
+.fade-in {
+  opacity: 1;
+}
+
+/* Clase que se aplica para ocultar el frame */
+.fade-out {
+  opacity: 0;
+}
+

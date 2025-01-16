@@ -1,0 +1,159 @@
+/* Contenedor para los botones "Crear" y "Volver" */
+.buttons-container {
+  display: flex;
+  justify-content: center;    /* Centra los botones horizontalmente */
+  gap: 0;                     /* Sin espacio entre los botones */
+}
+
+.custom-button1,
+.back-button {
+  background-color: white;      /* Fondo blanco */
+  color: #A1A1A1;               /* Texto en color gris */
+  border: 2px solid #A1A1A1;    /* Borde gris */
+  padding: 15px 70px;           /* Espaciado interno para los botones */
+  font-size: 20px;              /* Tamaño de letra */
+  cursor: pointer;              /* Cambia el cursor a pointer */
+  text-align: center;           /* Asegura que el texto esté centrado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra inicial */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+}
+
+.custom-button1 {
+  border-radius: 50px 0 0 50px;  /* Bordes redondeados solo a la izquierda */
+}
+
+.back-button {
+  border-radius: 0 50px 50px 0;  /* Bordes redondeados solo a la derecha */
+}
+
+.custom-button1:hover,
+.back-button:hover {
+  transform: translateY(-5px);   /* Levanta los botones hacia arriba */
+  background-color: #A1A1A1;     /* Cambia el fondo a gris oscuro al hacer hover */
+  color: white;                  /* Cambia el texto a blanco */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Aumenta la sombra */
+}
+
+/* Contenedor del título */
+.title {
+  background-color: #dfdfdfa0;   /* Fondo gris claro */
+  padding: 10px 20px;
+  border-radius: 50px;           /* Bordes redondeados */
+  margin-bottom: 30px;           /* Espacio inferior */
+  text-align: center;
+}
+
+.title h2 {
+  color: #A1A1A1;              /* Color gris oscuro */
+  font-size: 24px;
+  margin: 0;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;             /* Ancho máximo del formulario */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.905); /* Fondo semi-transparente */
+  border-radius: 50px;          /* Bordes redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);   /* Sombra suave */
+  color: #a1a1a1;               /* Texto gris oscuro */
+  margin-top: 100px;
+}
+
+/* Estilos del formulario */
+.custom-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #A1A1A1;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  background-color: #f0f4f7;   /* Color de fondo suave */
+  border: 1px solid #d1d1d1;   /* Borde gris claro */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.input-container input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  flex-grow: 1;
+  font-size: 16px;
+  padding: 10px;
+  color: #333;
+}
+
+/* Contenedor de radio buttons */
+.radio-container {
+  display: flex;         /* Flexbox para alinear elementos en fila */
+  gap: 20px;             /* Espacio entre las opciones */
+  justify-content: flex-start;  /* Alinear a la izquierda */
+}
+
+.radio-container label {
+  display: flex;
+  align-items: center;   /* Alinear el texto con el botón de radio */
+  cursor: pointer;       /* Cambiar el cursor cuando pase por encima */
+}
+
+.radio-container input[type="radio"] {
+  margin-right: 8px;     /* Espacio entre el botón de radio y el texto */
+}
+
+/* Estilos para el nombre de usuario */
+.user-name-container {
+  position: absolute;   /* Posición absoluta para colocarlo fuera del formulario */
+  top: 400px;           /* Posición desde arriba */
+  left: 100px;          /* Posición desde la izquierda */
+  background-color: #ffffffd1;  /* Color de fondo divertido */
+  padding: 20px;        /* Espaciado interno */
+  border-radius: 20px;  /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto flotante */
+  text-align: center;
+}
+
+.user-label {
+  font-size: 18px;     /* Tamaño del texto del label */
+  font-weight: bold;   /* Negrita */
+  color: #A1A1A1;      /* Verde oscuro para el texto */
+  margin-bottom: 10px;
+  display: block;
+}
+
+.user-name-container input {
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #A1A1A1;  /* Borde verde claro */
+  font-size: 16px;
+  outline: none;
+}
+
+.user-name-container input:focus {
+  border-color: #A1A1A1;  /* Cambiar borde al enfocarse */
+}
+
+/* Estilos para mostrar mensajes de error */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}

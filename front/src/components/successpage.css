@@ -1,0 +1,33 @@
+.success-container {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     text-align: center;
+     background-color: rgba(0, 128, 0, 0.1);  /* Fondo verde claro */
+   }
+   
+   .success-message-box {
+     background-color: #ffffffe8;  /* Fondo blanco para el cuadro */
+     border-radius: 20px;        /* Bordes redondeados */
+     padding: 40px 60px;         /* Espaciado interno */
+     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+     border: 2px solid #a1a1a1;  /* Borde verde claro */
+     text-align: center;
+   }
+   
+   .success-container h1 {
+     font-size: 3rem;
+     color: #4CAF50;  /* Color verde para indicar éxito */
+     margin-bottom: 20px;
+     font-family: 'Arial', sans-serif;  /* Fuente simple y elegante */
+   }
+   
+   .success-message-box p {
+     font-size: 1.5rem;
+     color: #666666;  /* Texto secundario */
+   }
+   
+  
+   

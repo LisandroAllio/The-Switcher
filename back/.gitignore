@@ -1,0 +1,14 @@
+# Ignore local database
+database_test.sqlite
+
+# Ignore coverage reports
+.coverage
+
+# Ignore python version files
+.python-version
+
+# Ignore folders
+.venv/
+__pycache__/
+.pytest_cache/
+pytest.ini
